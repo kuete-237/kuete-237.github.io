@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription à l'événement 🎉</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #9c27b0, #6a1b9a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      color: #6a1b9a;
+    }
+    input, select {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+    input:focus {
+      border: 1px solid #9c27b0;
+      outline: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 8px;
+      background: #6a1b9a;
+      color: white;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background: #4a148c;
+      transform: scale(1.03);
+    }
+    .msg {
+      color: green;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .illustration {
+      margin-top: 20px;
+    }
+    .illustration img {
+      width: 250px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    .illustration p {
+      color: #6a1b9a;
+      font-weight: bold;
+      margin-top: 8px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🎉 Inscrivez-vous à l'événement 🎉</h1>
+    <p>Veuillez remplir le formulaire ci-dessous :</p>
+
+    <form id="inscriptionForm">
+      <input type="text" id="nom" placeholder="Nom complet" required><br>
+      <input type="email" id="email" placeholder="Adresse email" required><br>
+      <input type="tel" id="telephone" placeholder="Numéro de téléphone" required><br>
+      <input type="text" id="ville" placeholder="Ville / Localité" required><br>
+      <select id="categorie" required>
+        <option value="">Choisissez votre catégorie</option>
+        <option value="Invité">Invité</option>
+        <option value="Organisateur">Organisateur</option>
+        <option value="Partenaire">Partenaire</option>
+      </select><br>
+      <table>
+      <tr><td><label>Photo :</label></td>
+     <td><input type="file" name="photo" accept="image/*" required></td>
+      </tr>
+      </table>
+      <button type="submit">S'inscrire</button>
+      <p class="msg" id="message"></p>
+    </form>
+
+    <button onclick="window.location.href='./taj.html'">👥 Voir la liste des inscrits</button>
+
+  <script>
+    const form = document.getElementById("inscriptionForm");
+    const message = document.getElementById("message");
+
+    let participants = JSON.parse(localStorage.getItem("participants")) || [];
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const nom = document.getElementById("nom").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const telephone = document.getElementById("telephone").value.trim();
+      const ville = document.getElementById("ville").value.trim();
+      const categorie = document.getElementById("categorie").value;
+
+      if (nom && email && telephone && ville && categorie) {
+        participants.push({ nom, email, telephone, ville, categorie });
+        localStorage.setItem("participants", JSON.stringify(participants));
+        form.reset();
+        message.textContent = "✅ Inscription réussie !";
+        setTimeout(() => message.textContent = "", 2000);
+      }
+    });
+  </script>
+
+</body>
+</html>
